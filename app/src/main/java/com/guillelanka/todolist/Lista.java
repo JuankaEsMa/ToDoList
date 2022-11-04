@@ -4,14 +4,11 @@ import java.util.List;
 
 public class Lista {
     String name;
-    int tareaCounter;
     List<Tarea> listaTareas;
 
-    Lista (String name){
-
-    }
     Lista(String name, List<Tarea> listaTareas){
-
+        this.name = name;
+        this.listaTareas = listaTareas;
     }
 
     public Lista() {
@@ -23,14 +20,6 @@ public class Lista {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getTareaCounter() {
-        return tareaCounter;
-    }
-
-    public void setTareaCounter(int tareaCounter) {
-        this.tareaCounter = tareaCounter;
     }
 
     public List<Tarea> getListaTareas() {
@@ -45,7 +34,6 @@ public class Lista {
     public String toString() {
         return "Lista{" +
                 "name='" + name + '\'' +
-                ", tareaCounter=" + tareaCounter +
                 ", listaTareas=" + listaTareas +
                 '}';
     }
