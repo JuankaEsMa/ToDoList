@@ -1,9 +1,12 @@
 package com.guillelanka.todolist;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
@@ -20,8 +23,11 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.guillelanka.todolist.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -53,14 +59,35 @@ public class MainActivity extends AppCompatActivity {
         }
         usuario = new Usuario(sharedPref.getString(this.getString(R.string.userKey),"fallo"));
 
-        usuario.addList("lista prueba 1");
-        usuario.addList("lista prueba 2");
-        FirebaseController.addList(usuario, usuario.listaListas);
-        List<String> listaTareas = new ArrayList<String>();
-        listaTareas.add("Tarea1");
-        listaTareas.add("Tarea2");
-        listaTareas.add("Tarea3");
-        FirebaseController.addTask(usuario, 0, listaTareas);
+        List<Tarea> listaTareas = new ArrayList<>();
+        Tarea newTarea = new Tarea("Tarea3");
+        listaTareas.add(newTarea);
+        List<Lista> listaListas = new ArrayList<>();
+        Lista newLista = new Lista("nombre Lista", listaTareas);
+        FirebaseController.addList(usuario,listaListas);
+        //FirebaseController.addTask(usuario,1, listaTareas);
+
+        listaTareas.add(newTarea);
+        FirebaseController.addTask(usuario,1,listaTareas);
+        FirebaseController.getDatabaseRoot().child(usuario.userKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Tarea> listaListas = new ArrayList<Tarea>();
+                for (DataSnapshot item: dataSnapshot.getChildren()
+                     ) {
+                    //Tarea tarea = item.getValue(Tarea.class);
+                    Log.i("tag", item.toString());
+                    //Lista lista = item.getValue(Lista.class);
+                    //Log.i("item", lista.toString());
+                    //listaListas.add(lista);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
