@@ -15,4 +15,6 @@
     <string name="button_add">Añadir</string>
     <string name="preference_file_key" />
     <string name="userKey" />
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

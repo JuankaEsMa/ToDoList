@@ -60,23 +60,27 @@ public class MainActivity extends AppCompatActivity {
         usuario = new Usuario(sharedPref.getString(this.getString(R.string.userKey),"fallo"));
 
         List<Tarea> listaTareas = new ArrayList<>();
-        Tarea newTarea = new Tarea("Tarea3");
-        listaTareas.add(newTarea);
+        Tarea newTarea = new Tarea("baguet");
         List<Lista> listaListas = new ArrayList<>();
-        Lista newLista = new Lista("nombre Lista", listaTareas);
-        FirebaseController.addList(usuario,listaListas);
         //FirebaseController.addTask(usuario,1, listaTareas);
 
         listaTareas.add(newTarea);
-        FirebaseController.addTask(usuario,1,listaTareas);
+
+        Lista newLista = new Lista("Panes", listaTareas);
+        //FirebaseController.addList(usuario,listaListas);
+        FirebaseController.addTask(usuario,"Cacahuete",listaTareas);
+
+
         FirebaseController.getDatabaseRoot().child(usuario.userKey).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<Tarea> listaListas = new ArrayList<Tarea>();
                 for (DataSnapshot item: dataSnapshot.getChildren()
                      ) {
-                    //Tarea tarea = item.getValue(Tarea.class);
-                    Log.i("tag", item.toString());
+                    Tarea tarea = new Tarea();
+
+
+                    Toast.makeText(getApplicationContext(),tarea.toString(),Toast.LENGTH_LONG).show();
                     //Lista lista = item.getValue(Lista.class);
                     //Log.i("item", lista.toString());
                     //listaListas.add(lista);

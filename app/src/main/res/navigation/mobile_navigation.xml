@@ -22,4 +22,9 @@
         android:name="com.guillelanka.todolist.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/list"
+        android:name="com.guillelanka.todolist.list"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list" />
 </navigation>
